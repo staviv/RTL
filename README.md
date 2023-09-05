@@ -1,18 +1,22 @@
 # RTL Chrome Extension
 
-A simple Chrome extension to toggle the text direction in Claude between RTL and LTR.
-
-## Description
-
-Quickly flip the Claude web app interface between left-to-right (LTR) and right-to-left (RTL) text directions with a keyboard shortcut. Useful for testing RTL layouts and localization. 
+A simple Chrome extension to toggle the text direction in Claude between RTL and LTR. 
 
 ## Usage
 
-1. Install the extension from the Chrome Web Store
+1. Clone this repository or download the files
+2. In Chrome, go to `chrome://extensions` 
+3. Turn on "Developer mode"
+4. Click "Load unpacked" and select the folder containing the extension files
+5. Navigate to [claude.ai](https://claude.ai)
+6. Press Ctrl+Shift+Space to toggle between RTL and LTR modes
 
-2. Navigate to [claude.ai](https://claude.ai)
+## Files
 
-3. Press Ctrl+Shift+Space to toggle between RTL and LTR modes
+- Icon.png - The icon image file for the extension
+- README.md - This README file 
+- content.js - The content script that runs on claude.ai and toggles the RTL/LTR mode
+- manifest.json - The manifest file that configures the extension
 
 ## Contributing
 
