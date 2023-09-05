@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "RTL",
+    "version": "0.9",
+    "description": "RTL",
+    "content_scripts": [
+      {
+        "matches": ["https://claude.ai/*"],
+        "js": ["content.js"]
+      }
+    ],
+    "icons": {
+      "192": "icon.png"
+    }
+  }
+
