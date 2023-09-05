@@ -4,7 +4,7 @@ A simple Chrome extension to toggle the text direction in Claude between RTL and
 
 ## Usage
 
-1. Clone this repository or download the files
+1. Download the files in this repository
 2. In Chrome, go to `chrome://extensions` 
 3. Turn on "Developer mode"
 4. Click "Load unpacked" and select the folder containing the extension files
