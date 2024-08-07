@@ -1,16 +1,27 @@
 {
-    "manifest_version": 3,
-    "name": "RTL",
-    "version": "0.9",
-    "description": "RTL",
-    "content_scripts": [
-      {
-        "matches": ["https://claude.ai/*"],
-        "js": ["content.js"]
-      }
-    ],
-    "icons": {
-      "192": "icon.png"
+  "manifest_version": 3,
+  "name": "RTL",
+  "version": "1.0",
+  "description": "RTL Toggle for Hebrew Text",
+  "permissions": ["activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
     }
+  ],
+  "commands": {
+    "toggle-rtl": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space"
+      },
+      "description": "Toggle RTL for Hebrew text"
+    }
+  },
+  "icons": {
+    "192": "icon.png"
   }
-
+}

@@ -1,30 +1,56 @@
+function containsHebrew(text) {
+  return /[\u0590-\u05FF]/.test(text);
+}
 
-// if use button to toggle direction
-/*
-var button = document.createElement("button");
-button.innerHTML = "RTL";
-button.style = "position: fixed; top: 0; left: 0; z-index: 9999";
-button.onclick = function() {
-  if (document.body.style.direction == "rtl") {
-    document.body.style.direction = "ltr";
-    button.innerHTML = "RTL";   
-  } else {
-    document.body.style.direction = "rtl";
-    button.innerHTML = "LTR";
-  }
-};
-document.body.appendChild(button);
-*/
+let isRTLActive = false;
+let affectedElements = new Set();
+let intervalId;
 
-// if use shortcut key to toggle direction (ctrl+shift+space)
-document.addEventListener('keydown', function(event) {
-  if (event.ctrlKey && event.shiftKey && event.keyCode == 32) {
-    if (document.body.style.direction == "rtl") {
-      document.body.style.direction = "ltr";
-      //button.innerHTML = "RTL";   
-    } else {
-      document.body.style.direction = "rtl";
-      //button.innerHTML = "LTR";
+function applyRTLStyles(element) {
+  element.style.direction = 'rtl';
+  element.style.textAlign = 'right';
+  element.style.justifyContent = 'flex-end';
+  affectedElements.add(element);
+}
+
+function removeRTLStyles(element) {
+  element.style.direction = '';
+  element.style.textAlign = '';
+  element.style.justifyContent = '';
+}
+
+function handleNewElements() {
+  const elements = document.body.getElementsByTagName('*');
+  for (let element of elements) {
+    if (!affectedElements.has(element) && element.childNodes.length === 1 && element.childNodes[0].nodeType === Node.TEXT_NODE) {
+      if (containsHebrew(element.textContent)) {
+        applyRTLStyles(element);
+        if (element.parentElement) {
+          applyRTLStyles(element.parentElement);
+        }
+      }
     }
+  }
+}
+
+function toggleRTLForHebrewElements() {
+  if (!isRTLActive) {
+    handleNewElements(); // Apply RTL to existing elements on activation
+    intervalId = setInterval(() => {
+      handleNewElements(); // Check for and apply RTL to new elements
+      affectedElements.forEach(applyRTLStyles); // Re-apply RTL to existing elements
+    }, 500);
+  } else {
+    clearInterval(intervalId);
+    affectedElements.forEach(removeRTLStyles);
+    affectedElements.clear();
+  }
+
+  isRTLActive = !isRTLActive;
+}
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.action === "toggleRTL") {
+    toggleRTLForHebrewElements();
   }
 });
